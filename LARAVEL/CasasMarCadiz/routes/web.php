@@ -2,10 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Vendedor;
+use App\Models\Comprador;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\VendedorController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
+
+Route::get('/', [VendedorController::class,'index']);
+Route::get('/mostrar/{id}',[VendedorController::class,'show']);
+
 
 Route::get('/hola', function () {
     return "Hola Mundo <br> Muajajaja";
@@ -106,5 +112,101 @@ Route::get('/ultimo', function () {
     
     return $vendedor;
 });
+
+Route::get('/compradores-paginado',function(){
+    //elemengos por pagina, campos, nombre pagina, numero pagina
+    return Comprador::paginate(5,"*","",4);
+});
+
+Route::get('/compradoras-paginado',function(){
+    //elemengos por pagina, campos, nombre pagina, numero pagina
+    return Comprador::where('sexo','=','F')
+    ->paginate(5,"*","",4);
+});
+
+Route::get('/vendedores-paginado',function(){
+    return Vendedor::simplePaginate(5);
+});
+
+Route::get("/crear-comprador",function(){
+    $comprador = Comprador::create([
+        'nombre' => 'Adri',
+        'nif' => '23232323j',
+        'fecha_nac' => '2001-02-29',
+        'sexo' => 'M',
+    ]);
+
+    return $comprador;
+
+});
+
+
+Route::get("/crear-comprador-v2",function(){
+    $comprador = new Comprador();
+    $comprador->nombre = "David";
+    $comprador->nif = "34343434f";
+    $comprador->sexo = 'N';
+    $comprador->fecha_nac ='2001-02-29';
+
+    $comprador->save();
+
+    return $comprador;
+
+});
+
+Route::get("/modificar-comprador/{id}",function($id){
+    $comprador = Comprador::find($id);
+    
+    $comprador->nombre = "Jairo";
+    $comprador->save();
+
+    return $comprador;
+
+});
+
+//Subir 100 euros a los no milenial
+Route::get("/vendedor-subir-sueldo",function(){
+    
+    $actualizados = Vendedor::where('fecha_nac','<','2000-01-01')
+    ->update([
+        'sueldo_base' => DB::raw('sueldo_base + 100')
+    ]);
+    return $actualizados;
+
+});
+
+
+Route::get("/borrar-vendedor/{id}",function($id){
+
+    $vendedor = Vendedor::findorFail($id);
+
+    $cantidad = $vendedor->delete();
+
+    return $cantidad;
+
+});
+
+Route::get("/borrar-vendedores",function(){
+
+    $cantidad = Vendedor::destroy([11,12,13]);
+    return $cantidad;
+
+});
+
+Route::get("/borrar-vendedores-machos",function(){
+
+    $cantidad = Vendedor::where('sexo','=','M')
+    ->orderBy('nombre')
+    ->limit(10)
+    ->delete();
+
+    return $cantidad;
+
+});
+
+
+
+
+
 
 
