@@ -14,8 +14,7 @@ class VendedorController extends Controller
     {
         //Cargamos los primeros 1o vendedores ordenados por nombre
         $vendedores = Vendedor::orderBy('nombre')->limit(10)->get();
-        $mensaje = "exito";
-
+        $mensaje = 'exito';
         if (count($vendedores) == 0) $mensaje = 'vacio';
 
         //Devolvemos la lista
@@ -31,7 +30,7 @@ class VendedorController extends Controller
         $mensaje = 'exito';
         if ($vendedor == null) $mensaje = 'error';
 
-        return view('detalleVendedor', compact('mensaje', 'vendedor'));
+        return view('detalleVendedor', compact('mensaje', 'vendedor', 'mensaje_eliminar'));
     }
     /**
      * Show the form for creating a new resource.
@@ -70,8 +69,17 @@ class VendedorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Vendedor $vendedor)
+    public function destroy($id)
     {
-        //
+        $vendedor = Vendedor::find($id);
+        $mensaje_eliminar = 'Eliminado';
+
+        if ($vendedor == null)
+            $mensaje_eliminar = 'error_eliminar';
+        else
+            $vendedor->delete();
+
+        //Redireccionamos al listado principal para que cargue los vendedores y los muestre actualizados
+        return redirect()->route('listadoVendedores', ['mensaje_eliminar' => $mensaje_eliminar]);
     }
 }
