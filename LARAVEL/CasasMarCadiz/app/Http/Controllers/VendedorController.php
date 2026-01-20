@@ -49,24 +49,28 @@ class VendedorController extends Controller
         $request->validate(
             [
                 'nombre' => 'required|max:100',
-                'nif' => 'required|max:9|unique|string',
+                'nif' => 'required|max:9|unique:vendedor,nif|string',
                 'fecha_nac' => 'date|required',
                 'sexo' => 'in:M,F,O',
                 'sueldo_base' => 'required|numeric|min:0',
             ]
         );
 
-        $vendedor = Vendedor::create([
+        $vendedor = Vendedor::create(
             $request->all()
-        ]);
-        /* Equivalente a 
+        );
+
+        /*
         $vendedor = Vendedor::create([
             'nombre' => $request->nombre,
-            'nif'=>$request->nif,
-            ...
-            ...
+            'nif' => $request->nif,
+            'fecha_nac' => $request->fecha_nac,
+            'sexo' => $request->sexo,
+            'sueldo_base' => $request->sueldo_base,
         ]);
-  */
+*/
+
+        return redirect()->route('listadoVendedores')->with('mensaje_exito', 'Vendedor Creado Correctamente');
     }
 
 
@@ -74,7 +78,13 @@ class VendedorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Vendedor $vendedor) {}
+    public function edit($id)
+    {
+
+        $vendedor = Vendedor::find($id);
+
+        return view('editarVendedor', compact('vendedor'));
+    }
 
     /**
      * Update the specified resource in storage.

@@ -10,7 +10,7 @@
 
 <div class="container my-4">
     <h1 class="mb-4">Lista de Vendedores</h1>
-
+    <!--MENSAJE DE EXITO DE ELIMINAR-->
     @if(session('mensaje_eliminar') == 'error_eliminar')
         <div class="alert alert-warning fade show">
             No se pudo eliminar el vendedor
@@ -19,6 +19,13 @@
     @elseif(session('mensaje_eliminar') == 'eliminado')
         <div class="alert alert-success fade show">
             Se elimino correctamente el vendedor
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+    <!--MENSAJE DE EXITO DE CREAR-->
+    @if(session('mensaje_exito'))
+        <div class="alert alert-success fade show">
+            {{ session('mensaje_exito') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     @endif
