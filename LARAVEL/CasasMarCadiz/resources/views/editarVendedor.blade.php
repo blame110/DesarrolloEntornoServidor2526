@@ -85,7 +85,7 @@
 
                 <hr>
                 <button type="submit" class="btn btn-warning">Actualizar</button>
-                <a href="{{ route('mostrarVendedor', $vendedor->id) }}" class="btn btn-secondary">Cancelar</a>
+                <a href="{{ route('listadoVendedores') }}" class="btn btn-secondary">Cancelar</a>
             </form>
         </div>
     </div>

@@ -9,6 +9,7 @@ use App\Http\Controllers\VendedorController;
 
 
 
+
 Route::get('/', [VendedorController::class, 'index'])->name('listadoVendedores');
 Route::get('/mostrar/{id}', [VendedorController::class, 'show'])->name('mostrarVendedor');
 Route::get('/vendedores/{id}/eliminar', [VendedorController::class, 'destroy'])->name('eliminarVendedor');

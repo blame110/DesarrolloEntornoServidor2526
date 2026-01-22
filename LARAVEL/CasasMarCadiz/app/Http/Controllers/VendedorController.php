@@ -89,9 +89,32 @@ class VendedorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Vendedor $vendedor)
+    public function update(Request $request, $id)
     {
-        //
+        //Primero cargamos el registro
+        $vendedor = Vendedor::find($id);
+
+        if ($vendedor->nif != $request->nif)
+            $request->validate(
+                [
+                    'nif' => 'required|max:9|unique:vendedor,nif|string',
+                ]
+            );
+
+
+        $request->validate(
+            [
+                'nombre' => 'required|max:100',
+                'nif' => 'required|max:9|string',
+                'fecha_nac' => 'date|required',
+                'sexo' => 'in:M,F,O',
+                'sueldo_base' => 'required|numeric|min:0',
+            ]
+        );
+
+        $vendedor->update($request->all());
+
+        return redirect()->route('listadoVendedores')->with('mensaje_exito', 'Vendedor Modificado Correctamente');
     }
 
     /**
