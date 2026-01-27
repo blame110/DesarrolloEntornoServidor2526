@@ -18,10 +18,13 @@ class VendedorController extends Controller
     public function index(Request $request): JsonResponse
     {
         // Número de elementos por página (por defecto 10)
-        $perPage = $request->input('per_page', 10);
+        //Cojo por query en la api para que los pille por la url
+        $perPage = $request->query('per_page', 10);
+        $page = $request->query('page', 1);
 
         $vendedores = Vendedor::orderBy('nombre')
-            ->paginate($perPage);
+            ->paginate($perPage, "*", "", $page);
+
 
         return response()->json([
             'status' => 'success',
@@ -35,7 +38,6 @@ class VendedorController extends Controller
      */
     public function show(Vendedor $vendedor): JsonResponse
     {
-        //$vendedor = Vendedor::find($id);
 
         if (!$vendedor) {
             return response()->json([
@@ -98,7 +100,7 @@ class VendedorController extends Controller
         }
 
         // Validación (el NIF puede ser el mismo del vendedor actual)
-        $validator = validator($request->all(), [
+        /*$validator = validator($request->all(), [
             'nombre' => 'required|max:100',
             'nif' => 'required|max:9|unique:vendedor,nif,' . $id,
             'fecha_nac' => 'required|date',
@@ -112,7 +114,7 @@ class VendedorController extends Controller
                 'message' => 'Errores de validación',
                 'errors' => $validator->errors()
             ], 422);
-        }
+        }*/
 
         $vendedor->update($request->all());
 
@@ -127,9 +129,8 @@ class VendedorController extends Controller
      * Eliminar vendedor
      * DELETE /api/vendedores/{id}
      */
-    public function destroy($id): JsonResponse
+    public function destroy(Vendedor $vendedor): JsonResponse
     {
-        $vendedor = Vendedor::find($id);
 
         if (!$vendedor) {
             return response()->json([
