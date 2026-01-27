@@ -1,5 +1,5 @@
 // Configuración de la API
-r
+
 // Para emulador Android usa: 10.0.2.2
 // Para dispositivo físico usa: la IP de tu ordenador (ej: 192.168.1.100)
 // Para iOS simulador usa: localhost

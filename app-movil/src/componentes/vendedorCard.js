@@ -5,6 +5,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 /**
  * Componente que muestra una tarjeta con los datos de un vendedor
  */
+
 const VendedorCard = ({ vendedor, onPress }) => {
 
 
@@ -17,8 +18,8 @@ const VendedorCard = ({ vendedor, onPress }) => {
     // Función para obtener el color del badge según el sexo
     const getBadgeColor = (sexo) => {
         switch (sexo) {
-            case 'M': return '#0d6efd';  // Azul
-            case 'F': return '#dc3545';  // Rojo
+            case 'M': return '#26e23c';  // Azul
+            case 'F': return '#b922aa';  // Rojo
             default: return '#6c757d';   // Gris
         }
     };

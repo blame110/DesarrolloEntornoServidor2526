@@ -8,7 +8,7 @@ import { API_URL } from '../config/config';
 export const getVendedores = async (page = 1, perPage = 10) => {
     try {
         const response = await fetch(
-            `${API_URL}/vendedores?page=${page}&per_page=${perPage}`,
+            `${API_URL}/vendedor?page=${page}&per_page=${perPage}`,
             {
                 method: 'GET',
                 headers: {
@@ -20,7 +20,7 @@ export const getVendedores = async (page = 1, perPage = 10) => {
 
 
         if (!response.ok) {
-            throw new Error('Error al obtener vendedores');
+            throw new Error(`Error al obtener vendedores ${API_URL}/vendedor?page=${page}&per_page=${perPage}`);
         }
 
 
