@@ -1,7 +1,4 @@
-# Navegación (para futuras pantallas)
-npm install @react-navigation/native @react-navigation/native-stack
-# Dependencias de navegación para Expo
-npx expo install react-native-screens react-native-safe-area-con
+
 # Instalar React Navigation
 npm install @react-navigation/native @react-navigation/native-stack
 # Instalar dependencias de Expo para navegación
